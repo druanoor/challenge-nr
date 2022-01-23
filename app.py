@@ -1,5 +1,6 @@
 import string
 import sys
+import os
 
 def printHelp():
     print("Usage:\n")
@@ -44,21 +45,31 @@ def printResults(sortedDic):
             print(x[0],"-", x[1])
             i+=1
 
-def readInput():
+def readInput(argv):
     bookstring = ""
-    if (len(sys.argv) < 2):
-        bookstring = sys.stdin.read()
-    elif(sys.argv[1] == "-h" or sys.argv[1] == "--help"):
+    if (len(argv) < 2):
+        if not sys.stdin.isatty():
+            bookstring = sys.stdin.read()
+        else:
+            printHelp()
+            
+    elif(argv[1] == "-h" or argv[1] == "--help"):
         printHelp()
     else:
-        for argv in sys.argv[1:]:
-            book = open(argv, 'r', encoding="utf8")
-            auxBookString = book.read()
-            bookstring = bookstring+" "+auxBookString
+        for arg in argv[1:]:
+            if(os.path.exists(arg)):
+                book = open(arg, 'r', encoding="utf8")
+                auxBookString = book.read()
+                bookstring = bookstring+" "+auxBookString
+                book.close()
+            else:
+                print("File: "+arg+" doesn't exists, exiting...")
+                exit()
 
     return bookstring
 
-sortedDictionary = {}
-book = readInput()
-sortedDic = fillStringDictionary(sortedDictionary, clearInput(book))
-printResults(sortedDic)
+if __name__ == '__main__':
+    sortedDictionary = {}
+    book = readInput(sys.argv)
+    sortedDic = fillStringDictionary(sortedDictionary, clearInput(book))
+    printResults(sortedDic)
