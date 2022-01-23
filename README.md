@@ -21,7 +21,6 @@ Implement concurrecy using threads (one thread per book in argv, or splitting th
 
 Yes, my output when running the moby-dick.txt book differs a little bit from the example. I'm pretty sure it's because a punctuation character that i couldn't find :(
 
-
 # Extra Credit
 
 - It handles unicode characters(eg. the ü in Süsse or ß in Straße): YES!
@@ -50,7 +49,6 @@ Disadvantages:
 Adds complexity to the deployments and platform team
 
 Distributed systems always add extra "delay" because of the requests being made from one microservice to another.
-
 
 - How would you scale this if you needed to support millions of requests simultaneously? (Imagine the program is complex enough to require it)
 
