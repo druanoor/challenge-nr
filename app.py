@@ -1,6 +1,14 @@
 import string
 import sys
 
+def printHelp():
+    print("Usage:\n")
+    print("python3 app.py [args]\n")
+    print("Example:\n")
+    print("With files as arguments: python3 app.py text-examples/moby-dick.txt text-examples/2-word-catcher.txt")
+    print("or")
+    print("Using STDIN: cat text-examples/moby-dick.txt | python3 app.py\n")
+
 def fillStringDictionary(sortedDictionary, input_string):
     stringDictio = {}
     words = input_string.split()
@@ -21,7 +29,10 @@ def fillStringDictionary(sortedDictionary, input_string):
 
 def clearInput(input_string):
     input_string = input_string.lower()
-    input_string = input_string.replace("’", "'").replace("”", "").replace("“", "").replace("—", "")
+    input_string = input_string.replace("’", "'")
+    input_string = input_string.replace("”", "")
+    input_string = input_string.replace("“", "")
+    input_string = input_string.replace("—", "")
     input_string = input_string.replace("\n", " ")
     input_string = input_string.translate(str.maketrans('', '', string.punctuation.replace("'", "")))
     return input_string
@@ -37,6 +48,8 @@ def readInput():
     bookstring = ""
     if (len(sys.argv) < 2):
         bookstring = sys.stdin.read()
+    elif(sys.argv[1] == "-h" or sys.argv[1] == "--help"):
+        printHelp()
     else:
         for argv in sys.argv[1:]:
             book = open(argv, 'r', encoding="utf8")
